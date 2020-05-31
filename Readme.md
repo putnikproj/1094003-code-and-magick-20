@@ -1,7 +1,7 @@
 # Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
 
 * Студент: [Никита Путилин](https://up.htmlacademy.ru/javascript/20/user/1094003).
-* Наставник: `Неизвестно`.
+* Наставник: [Максим Деев](https://up.htmlacademy.ru/javascript/20/user/685777).
 
 ---
 
