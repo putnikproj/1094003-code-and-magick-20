@@ -47,19 +47,26 @@ var closePopup = function () {
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
-var changeSetup = function (thingToChange, howToChange, input, possiblePreoperties, counter) {
-  if (howToChange === 'fill') {
-    thingToChange.style.fill = possiblePreoperties[counter];
+var changeSetupCounter = function (maxCount) {
+  var count = 0;
+
+  return function () {
+    if (count === maxCount) {
+      count = 0;
+    } else {
+      count++;
+    }
+    return count;
+  };
+};
+
+var changeSetup = function (thingToChange, input, preoperty) {
+  if (thingToChange.tagName === 'use') {
+    thingToChange.style.fill = preoperty;
   } else {
-    thingToChange.style.backgroundColor = possiblePreoperties[counter];
+    thingToChange.style.backgroundColor = preoperty;
   }
-  input.value = possiblePreoperties[counter];
-  if (counter === possiblePreoperties.length - 1) {
-    counter = 0;
-  } else {
-    counter++;
-  }
-  return counter;
+  input.value = preoperty;
 };
 
 var possibleWizardProperties = {
@@ -114,21 +121,21 @@ var setupWizard = document.querySelector('.setup-wizard');
 
 var setupWizardCoat = setupWizard.querySelector('.wizard-coat');
 var setupWizardCoatInput = document.querySelector('#coat-color');
-var setupWizardCurrentCoat = 1;
+var setupWizardCurrentCoat = changeSetupCounter(possibleWizardProperties.coatColors.length - 1);
 setupWizardCoat.addEventListener('click', function () {
-  setupWizardCurrentCoat = changeSetup(setupWizardCoat, 'fill', setupWizardCoatInput, possibleWizardProperties.coatColors, setupWizardCurrentCoat);
+  changeSetup(setupWizardCoat, setupWizardCoatInput, possibleWizardProperties.coatColors[setupWizardCurrentCoat()]);
 });
 
 var setupWizardEyes = setupWizard.querySelector('.wizard-eyes');
 var setupWizardEyesInput = document.querySelector('#eyes-color');
-var setupWizardCurrentEye = 1;
+var setupWizardCurrentEye = changeSetupCounter(possibleWizardProperties.eyesColors.length - 1);
 setupWizardEyes.addEventListener('click', function () {
-  setupWizardCurrentEye = changeSetup(setupWizardEyes, 'fill', setupWizardEyesInput, possibleWizardProperties.eyesColors, setupWizardCurrentEye);
+  changeSetup(setupWizardEyes, setupWizardEyesInput, possibleWizardProperties.eyesColors[setupWizardCurrentEye()]);
 });
 
 var setupFireballWrap = document.querySelector('.setup-fireball-wrap');
 var setupFireballWrapInput = document.querySelector('#fireball-color');
-var setupCurrentFireballWrap = 1;
+var setupCurrentFireballWrap = changeSetupCounter(possibleFireballColor.length - 1);
 setupFireballWrap.addEventListener('click', function () {
-  setupCurrentFireballWrap = changeSetup(setupFireballWrap, 'backgroundColor', setupFireballWrapInput, possibleFireballColor, setupCurrentFireballWrap);
+  changeSetup(setupFireballWrap, setupFireballWrapInput, possibleFireballColor[setupCurrentFireballWrap()]);
 });
