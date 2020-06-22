@@ -13,14 +13,17 @@
     for (var i = 0; i < window.constants.WIZARDS_AMOUNT; i++) {
       wizards[i] = {
         'name': possible.names[getRandomNumber(0, possible.names.length - 1)] + ' ' + possible.surnames[getRandomNumber(0, possible.surnames.length - 1)],
-        'coatColor': possible.coatColors[getRandomNumber(0, possible.coatColors.length - 1)],
-        'eyesColor': possible.eyesColors[getRandomNumber(0, possible.eyesColors.length - 1)]
+        'colorCoat': possible.coatColors[getRandomNumber(0, possible.coatColors.length - 1)],
+        'colorEyes': possible.eyesColors[getRandomNumber(0, possible.eyesColors.length - 1)]
       };
     }
     return wizards;
   };
 
+  var wizards = createWizards();
+
   window.data = {
-    createWizards: createWizards
+    wizards: wizards,
+    getRandomNumber: getRandomNumber
   };
 })();
